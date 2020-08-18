@@ -3,10 +3,8 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import { createServer } from 'https';
 import { env } from 'process';
-import { authorizeApp } from './app.auth.mjs';
-import { key, cert } from './app.certs.mjs';
-import authRoutes from './routes.auth.mjs';
-import resourceRoutes from './routes.resource.mjs';
+import { key, cert } from './server.certs.mjs';
+import routes from './server.routes.mjs';
 
 const app = express();
 app.use(express.json());
@@ -24,16 +22,9 @@ app.use((req, res, next) => {
   next();
 });
 
-if (env.LIVE === 'true') {
-  authorizeApp({
-    un: '9190fcce-d6d7-4473-9449-412f281f9bc6',
-    pw: 'Password1!',
-  });
-}
-authRoutes(app);
-resourceRoutes(app);
+routes(app);
 
 env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
-createServer({ key, cert }, app).listen(env.SERVER_PORT);
+createServer({ key, cert }, app).listen(9443);
 
-console.log(`Listening to HTTPS on secure port: ${env.SERVER_PORT}`);
+console.log(`Listening to HTTPS on secure port: 9443`);

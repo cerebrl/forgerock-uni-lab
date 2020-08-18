@@ -1,190 +1,20 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>ForgeRock JavaScript SDK FEC sample</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link rel="stylesheet" href="_static/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/style.css" />
+  </head>
 
-<head>
-  <title>ForgeRock JavaScript SDK FEC sample</title>
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="_static/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="_static/css/theme.css">
-  <link rel="stylesheet" type="text/css" href="_static/css/style.css">
-</head>
+  <body>
+    <div id="root"></div>
 
-<body>
-  <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
-<header id="header">
-  <nav class="navbar navbar-default navbar-static-top" role="navigation">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand"><img src="_static/img/FEC_logo.png" height="50"  alt=""></a></div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul id="menu" class="nav navbar-nav custom_nav">
-              <li id="home_menu"><a onclick="home()">Home</a></li>
-              <li id="login_menu"><a onclick="login()">Sign In</a></li>
-              <li id="browse_menu"><a>Browse</a></li>
-              <li id="logout_menu"><a onclick="logout()">Log out</a></li>
-            </ul>
-      </div>
-    </div>
-  </nav>
-</header>
-<div class="container">
-<section id="content">
-  <div class="featured_slider">
-    <h2 id="featured_msg" class="featured_title"></h2>
-    <div id="steps">
-      <div id="initial_msg"></div>
-    </div>
-</div>
-</section>
-</div>
-
-<script src="/_static/js/index.js"></script>
-<script>
-   console.log("Load AM communication details");
-
-   const frui = new forgerock.FRUI({ targetId: 'initial_msg' });
-      forgerock.Config.set({
-      clientId: 'WebOAuthClient',
-      redirectUri: 'https://sdkapp.example.com:8443/_callback',
-      scope: 'openid profile me.read',
-      serverConfig: {
-        baseUrl: 'https://default.iam.example.com:51927/am',
-        timeout: '90000'
-      },
-      realmPath: 'root',
-      tree: 'UsernamePassword'
-  });
-
-   //Shows initial display
-   function initialDisplay() {
-    console.log("In: initialDisplay");
-
-    //display initial view
-     hideAll();
-     displaySelected("#login_menu")
-
-     //populate with values
-     document.getElementById("featured_msg").innerHTML= "Hello. Sign in or register to watch some amazing content!!"
-   }
-
-   function displayAuthenticated(){
-     console.log("In: displayAuthenticated");
-
-     //display view for authenticated users
-     hideAll();
-     displaySelected("#browse_menu, #logout_menu")
-   }
-
-   function home() {
-      console.log("In: home");
-
-      //display initial view
-      initialDisplay();
-    }
-
-    async function login() {
-      console.log("In: login");
-
-      //display initial view
-      hideAll();
-
-
-      //populate with values
-      document.getElementById("featured_msg").innerHTML= "Welcome. Please enter your credentials:"
-
-      const result = await frui.getSession();
-      console.log(result);
-
-      if (result.type === 'LoginSuccess'){
-        successful_login(result);
-      }
-      else{
-        failed_login(result);
-      }
-    }
-
-    function successful_login(result) {
-      console.log("In: successful_login");
-
-      //display initial view
-      hideAll();
-      displayAuthenticated();
-
-      //populate with values
-      document.getElementById("featured_msg").innerHTML= "Welcome! Enjoy our great offering!";
-      document.getElementById("initial_msg").innerHTML= `Your sso token is: ${result.getSessionToken()}`;
-    }
-
-    function failed_login(result) {
-      console.log("In: failed_login");
-
-      //display initial view
-      hideAll();
-      displaySelected("#login_menu");
-
-      //populate with values
-      document.getElementById("featured_msg").innerHTML= "Authentication failed!";
-      document.getElementById("initial_msg").innerHTML= `The failure message is: ${result.getMessage()}`;
-    }
-
-    async function logout() {
-      console.log("In: login");
-
-      //display initial view
-      hideAll();
-      displaySelected("#login_menu");
-
-      //populate with values
-      try{
-        await forgerock.SessionManager.logout();
-              //populate with values
-        document.getElementById("featured_msg").innerHTML= "You are logged out. See you again soon!";
-
-      } catch(error){
-        console.error(error);
-      }
-    }
-
-   //Hides each element in the page; must be followed by a display function
-   function hideAll(listToHide) {
-      console.log("In: hideAll");
-      var x = document.querySelectorAll("#login_menu, #browse_menu, #logout_menu");
-      var i;
-      for (i = 0; i < x.length; i++) {
-        x[i].style.display= 'none';
-      }
-      document.getElementById("featured_msg").innerHTML= ""
-      document.getElementById("initial_msg").innerHTML= ""
-   }
-
-   //Displays list of elements
-   function displaySelected(listSelected){
-    console.log("In: displaySelected");
-      var x = document.querySelectorAll(listSelected);
-      var i;
-      for (i = 0; i < x.length; i++) {
-        x[i].style.display= 'block';
-      }
-   }
-
-  initialDisplay();
-</script>
-
-
-<footer id="footer">
-  <div class="footer_top">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-3 col-md-3 col-sm3">
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
-</body>
-
+    <script type="module" src="index.js"></script>
+  </body>
 </html>
