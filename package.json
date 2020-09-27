@@ -4,17 +4,32 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:app": "http-server app/ -c1 -p 8443 --ssl --cert example.com+5.pem --key example.com+5-key.pem",
-    "start:server": "node server/index.mjs"
+    "start:client": "ws -d public/ --spa index.html -p 8443 --cert example.com+5.pem --key example.com+5-key.pem",
+    "start:server": "node server/index.mjs",
+    "watch": "webpack -w"
   },
   "author": "ForgeRock Uni",
   "license": "ISC",
   "devDependencies": {
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-react": "^7.10.4",
+    "babel-loader": "^8.1.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "http-server": "^0.12.3",
-    "superagent": "^6.0.0"
+    "local-web-server": "^4.2.1",
+    "superagent": "^6.0.0",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "@forgerock/javascript-sdk": "^2.1.0",
+    "page": "^1.11.6",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   }
 }

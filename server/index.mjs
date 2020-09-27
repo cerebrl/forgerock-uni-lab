@@ -1,11 +1,25 @@
+/*
+ * fecapp
+ *
+ * index.mjs
+ *
+ * Copyright (c) 2020 ForgeRock. All rights reserved.
+ * This software may be modified and distributed under the terms
+ * of the MIT license. See the LICENSE file for details.
+ */
+
 import cors from 'cors';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import { createServer } from 'https';
 import { env } from 'process';
+
 import { key, cert } from './server.certs.mjs';
 import routes from './server.routes.mjs';
 
+/**
+ * Create and configure Express
+ */
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
@@ -17,14 +31,27 @@ app.use(
     },
   }),
 );
+
+/**
+ * Logs out all server interactions
+ */
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.path}`);
   next();
 });
 
+/**
+ * Initialize routes
+ */
 routes(app);
 
+/**
+ * Ignore self-signed cert warning
+ */
 env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
-createServer({ key, cert }, app).listen(9443);
 
+/**
+ * Attach application to port
+ */
+createServer({ key, cert }, app).listen(9443);
 console.log(`Listening to HTTPS on secure port: 9443`);

@@ -1,47 +1,32 @@
+/*
+ * fecapp
+ *
+ * server.routes.mjs
+ *
+ * Copyright (c) 2020 ForgeRock. All rights reserved.
+ * This software may be modified and distributed under the terms
+ * of the MIT license. See the LICENSE file for details.
+ */
+
 import request from 'superagent';
-import { key, cert } from './server.certs.mjs';
-import { AM_URL } from './server.constants.mjs';
 
-async function auth(req, res, next) {
-  let response;
-  try {
-    if (req.headers.authorization) {
-      // Using OAuth
-      const authHeaderArr = req.headers.authorization.split(' ');
-      response = await request
-        .post(`${AM_URL}/oauth2/introspect`)
-        .key(key)
-        .cert(cert)
-        .set('Content-Type', 'application/json')
-        .set('iPlanetDirectoryPro', req.cookies.iPlanetDirectoryPro)
-        .set('Accept-API-Version', 'resource=1.2')
-        .query({ token: authHeaderArr[1] });
-    } else {
-      // Using SSO
-      response = await request
-        .post(`${AM_URL}/json/sessions/?_action=validate`)
-        .key(key)
-        .cert(cert)
-        .set('Content-Type', 'application/json')
-        .set('iPlanetDirectoryPro', req.cookies.iPlanetDirectoryPro)
-        .set('Accept-API-Version', 'resource=2.1, protocol=1.0')
-        .send({ tokenId: req.cookies.iPlanetDirectoryPro });
-    }
-  } catch (err) {
-    response = {
-      body: {},
-    };
-  }
+import { MOVIE_CATALOG_URL } from './server.constants.mjs';
+import { auth } from './server.middleware.mjs';
 
-  if (response.body.active || response.body.valid) {
-    next();
-  } else {
-    res.status(401).send();
-  }
-}
-
-export default function (app) {
+/**
+ * @function routes - Initializes the routes
+ * @param app {Object} - Express application
+ * @return {void}
+ */
+export default async function routes(app) {
+  /**
+   * Protected route for movies resource.
+   * The auth middleware checks for valid user auth.
+   */
   app.get('/movies', auth, async (req, res) => {
-    res.json({ message: 'Movies!!' });
+    // Calls mock, public JSON file with movie data
+    const response = await request.get(MOVIE_CATALOG_URL);
+    const movies = JSON.parse(response.text);
+    res.json(movies);
   });
 }
