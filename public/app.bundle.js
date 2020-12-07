@@ -81,10 +81,1538 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./client/index.js");
 /******/ })
 /************************************************************************/
 /******/ ({
+
+/***/ "./client/app.js":
+/*!***********************!*\
+  !*** ./client/app.js ***!
+  \***********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return App; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _views_catalog_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./views/catalog.js */ "./client/views/catalog.js");
+/* harmony import */ var _components_header_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/header.js */ "./client/components/header.js");
+/* harmony import */ var _views_home_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./views/home.js */ "./client/views/home.js");
+/* harmony import */ var _views_login_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./views/login.js */ "./client/views/login.js");
+/* harmony import */ var _components_footer_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/footer.js */ "./client/components/footer.js");
+/* harmony import */ var _state_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./state.js */ "./client/state.js");
+/*
+ * fecapp
+ *
+ * app.js
+ *
+ * Copyright (c) 2020 ForgeRock. All rights reserved.
+ * This software may be modified and distributed under the terms
+ * of the MIT license. See the LICENSE file for details.
+ */
+
+
+
+
+
+
+
+/**
+ * @function App - Application React view
+ * @returns {Object} - React JSX view
+ */
+
+function App() {
+  var [state] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_state_js__WEBPACK_IMPORTED_MODULE_6__["AppContext"]);
+  var Main;
+
+  switch (state.page) {
+    case 'home':
+      Main = _views_home_js__WEBPACK_IMPORTED_MODULE_3__["default"];
+      break;
+
+    case 'catalog':
+      Main = _views_catalog_js__WEBPACK_IMPORTED_MODULE_1__["default"];
+      break;
+
+    case 'login':
+      Main = _views_login_js__WEBPACK_IMPORTED_MODULE_4__["default"];
+      break;
+
+    default:
+      Main = _views_home_js__WEBPACK_IMPORTED_MODULE_3__["default"];
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_header_js__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+    id: "content"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "featured_slider"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Main, null)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_footer_js__WEBPACK_IMPORTED_MODULE_5__["default"], null));
+}
+
+/***/ }),
+
+/***/ "./client/components/choice.js":
+/*!*************************************!*\
+  !*** ./client/components/choice.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Choice; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/*
+ * fecapp
+ *
+ * choice.js
+ *
+ * Copyright (c) 2020 ForgeRock. All rights reserved.
+ * This software may be modified and distributed under the terms
+ * of the MIT license. See the LICENSE file for details.
+ */
+
+/**
+ * @function Choice - React component used for displaying choices
+ * @param {Object} props - React props object passed from parent
+ * @param {Object} props.step - The authentication "step" object from ForgeRock's SDK
+ * @returns {Object} - React JSX view
+ */
+
+function Choice(props) {
+  var choiceCb = props.step.getCallbackOfType('ChoiceCallback');
+  var prompt = choiceCb.getPrompt();
+  var choiceOptions = choiceCb.getChoices();
+  /**
+   * @function setValue - Sets the value on the callback on element blur (lose focus)
+   * @param {Object} event
+   */
+
+  function setValue(event) {
+    choiceCb.setChoiceIndex(event.target.value);
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    htmlFor: "prompt"
+  }, prompt), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+    onBlur: setValue,
+    name: "selected",
+    className: "form-control"
+  }, choiceOptions.map(function (option, idx) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+      key: idx,
+      value: idx
+    }, option);
+  }))));
+}
+
+/***/ }),
+
+/***/ "./client/components/device-profile.js":
+/*!*********************************************!*\
+  !*** ./client/components/device-profile.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return DeviceProfile; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _forgerock_javascript_sdk__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @forgerock/javascript-sdk */ "./node_modules/@forgerock/javascript-sdk/lib-esm/index.js");
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+/*
+ * fecapp
+ *
+ * choice.js
+ *
+ * Copyright (c) 2020 ForgeRock. All rights reserved.
+ * This software may be modified and distributed under the terms
+ * of the MIT license. See the LICENSE file for details.
+ */
+
+
+/**
+ * @function DeviceProfile - React component used for retrieving the device profile
+ * @param {Object} props - React props object passed from parent
+ * @param {Object} props.step - The authentication "step" object from ForgeRock's SDK
+ * @returns {Object} - React JSX view
+ */
+
+function DeviceProfile(props) {
+  var deviceCollectorCb = props.step.getCallbackOfType('DeviceProfileCallback');
+  var isLocationRequired = deviceCollectorCb.isLocationRequired();
+  var isMetadataRequired = deviceCollectorCb.isMetadataRequired();
+  var message = deviceCollectorCb.getMessage();
+  /**
+   * Create state for this component in order to update the view upon change
+   * `deviceProfile` is the actual JSON intended for sending to AM
+   * `deviceProfileString` is intended only for rendering within the view
+   */
+
+  var [deviceProfile, updateDeviceProfile] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null);
+  var [deviceProfileString, updateDeviceProfileString] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('Collecting profile ...');
+  /**
+   * Implement a `useEffect` here since we are interacting with the browser's
+   * asynchronous location API. When the API returns the value, we will update
+   * the state and this component will rerender.
+   */
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    /**
+      * @function getDeviceProfile - create the FRDevice Object and collect profile
+      */
+    function getDeviceProfile() {
+      return _getDeviceProfile.apply(this, arguments);
+    } // Only call if there is no profile
+
+
+    function _getDeviceProfile() {
+      _getDeviceProfile = _asyncToGenerator(function* () {
+        var device = new _forgerock_javascript_sdk__WEBPACK_IMPORTED_MODULE_1__["FRDevice"]();
+        var profile = yield device.getProfile({
+          location: isLocationRequired,
+          metadata: isMetadataRequired
+        }); // Update the respective states
+
+        updateDeviceProfile(profile);
+        updateDeviceProfileString(JSON.stringify(profile, false, 2)); // Sets value on callback
+
+        deviceCollectorCb.setProfile(profile);
+      });
+      return _getDeviceProfile.apply(this, arguments);
+    }
+
+    if (!deviceProfile) {
+      getDeviceProfile();
+    }
+  });
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    id: "page_body"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    htmlFor: "prompt"
+  }, message), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, deviceProfileString));
+}
+
+/***/ }),
+
+/***/ "./client/components/footer.js":
+/*!*************************************!*\
+  !*** ./client/components/footer.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Footer; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/*
+ * fecapp
+ *
+ * footer.js
+ *
+ * Copyright (c) 2020 ForgeRock. All rights reserved.
+ * This software may be modified and distributed under the terms
+ * of the MIT license. See the LICENSE file for details.
+ */
+
+/**
+ * @function Footer - React footer view
+ * @returns {Object} - React JSX view
+ */
+
+function Footer() {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("footer", {
+    id: "footer"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "footer_top"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-lg-3 col-md-3 col-sm3"
+  })))));
+}
+;
+
+/***/ }),
+
+/***/ "./client/components/header.js":
+/*!*************************************!*\
+  !*** ./client/components/header.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Header; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _state_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../state.js */ "./client/state.js");
+/*
+ * fecapp
+ *
+ * header.js
+ *
+ * Copyright (c) 2020 ForgeRock. All rights reserved.
+ * This software may be modified and distributed under the terms
+ * of the MIT license. See the LICENSE file for details.
+ */
+
+
+/**
+ * @function Header - Header React view
+ * @returns {Object} - React JSX view
+ */
+
+function Header() {
+  /**
+   * Collects the global state for detecting user auth for rendering
+   * appropriate navigational items.
+   */
+  var [state] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_state_js__WEBPACK_IMPORTED_MODULE_1__["AppContext"]);
+  var CatalogItem;
+  var SignInOrOutItem;
+  /**
+   * Render different navigational items depending on authenticated status
+   */
+
+  switch (state.authenticated) {
+    case true:
+      CatalogItem = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "/catalog"
+      }, "Browse"));
+      SignInOrOutItem = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "/logout"
+      }, "Log out"));
+      break;
+
+    default:
+      CatalogItem = null;
+      SignInOrOutItem = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "/login"
+      }, "Sign In"));
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    className: "scrollToTop",
+    href: "#"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fa fa-angle-up"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
+    id: "header"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
+    className: "navbar navbar-default navbar-static-top",
+    role: "navigation"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "navbar-header"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "button",
+    className: "navbar-toggle collapsed",
+    "data-toggle": "collapse",
+    "data-target": "#navbar",
+    "aria-expanded": "false",
+    "aria-controls": "navbar"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "sr-only"
+  }, "Toggle navigation"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "icon-bar"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    className: "navbar-brand"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    src: "img/FEC_logo.png",
+    height: "50",
+    alt: ""
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    id: "navbar",
+    className: "navbar-collapse collapse"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+    id: "menu",
+    className: "nav navbar-nav custom_nav"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    href: "/"
+  }, "Home")), CatalogItem, SignInOrOutItem))))));
+}
+
+/***/ }),
+
+/***/ "./client/components/movie-card.js":
+/*!*****************************************!*\
+  !*** ./client/components/movie-card.js ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return MovieCard; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/*
+ * fecapp
+ *
+ * movie-card.js
+ *
+ * Copyright (c) 2020 ForgeRock. All rights reserved.
+ * This software may be modified and distributed under the terms
+ * of the MIT license. See the LICENSE file for details.
+ */
+
+/**
+ * @function MovieCard - Used for display a single movie and its details
+ * @param {Object} props - The object representing React's props
+ * @param {Object} props.movie - The movie object passed from the parent component
+ * @returns {Object} - React JSX view
+ */
+
+function MovieCard(_ref) {
+  var {
+    movie
+  } = _ref;
+  // CSS for the card, this could be moved to a CSS file, if desired
+  var cardStyle = {
+    display: 'inline-block',
+    padding: '2em',
+    width: '33%'
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    className: "card",
+    style: cardStyle
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    alt: "Image from ".concat(movie.Title),
+    className: "card-img-top",
+    src: movie.Images[0],
+    style: {
+      width: '100%'
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "card-body"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
+    className: "card-title"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Title: ", movie.Title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "card-text"
+  }, "Genre: ", movie.Genre), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    className: "btn btn-primary"
+  }, "Watch Movie")));
+}
+
+/***/ }),
+
+/***/ "./client/components/password.js":
+/*!***************************************!*\
+  !*** ./client/components/password.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Password; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/*
+ * fecapp
+ *
+ * password.js
+ *
+ * Copyright (c) 2020 ForgeRock. All rights reserved.
+ * This software may be modified and distributed under the terms
+ * of the MIT license. See the LICENSE file for details.
+ */
+
+/**
+ * @function Password - React component used for displaying password callback
+ * @param {Object} props - React props object passed from parent
+ * @param {Object} props.step - The authentication "step" object from ForgeRock's SDK
+ * @returns {Object} - React JSX view
+ */
+
+function Password(props) {
+  var passwordCb = props.step.getCallbackOfType('PasswordCallback');
+  var passwordLabel = passwordCb.getPrompt();
+  /**
+   * @function setValue - Sets the value on the callback on element blur (lose focus)
+   * @param {Object} event
+   */
+
+  function setValue(event) {
+    passwordCb.setPassword(event.target.value);
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    htmlFor: "passwordInput"
+  }, passwordLabel), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    onBlur: setValue,
+    type: "password",
+    name: "password",
+    className: "form-control",
+    id: "passwordInput"
+  }));
+}
+
+/***/ }),
+
+/***/ "./client/components/unknown.js":
+/*!**************************************!*\
+  !*** ./client/components/unknown.js ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Unknown; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/*
+ * fecapp
+ *
+ * unknown.js
+ *
+ * Copyright (c) 2020 ForgeRock. All rights reserved.
+ * This software may be modified and distributed under the terms
+ * of the MIT license. See the LICENSE file for details.
+ */
+
+/**
+ * @function Unknown- React component used for displaying Unknown callback
+ * @param {Object} props - React props object passed from parent
+ * @param {Object} props.step - The authentication "step" object from ForgeRock's SDK
+ * @returns {Object} - React JSX view
+ */
+
+function Unknown(props) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Warning: an unknown Callback is present!"));
+}
+
+/***/ }),
+
+/***/ "./client/components/username-password.js":
+/*!************************************************!*\
+  !*** ./client/components/username-password.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return UsernamePassword; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/*
+ * fecapp
+ *
+ * username-password.js
+ *
+ * Copyright (c) 2020 ForgeRock. All rights reserved.
+ * This software may be modified and distributed under the terms
+ * of the MIT license. See the LICENSE file for details.
+ */
+
+/**
+ * @function UsernamePassword - React component used for displaying username and password step
+ * @param {Object} props - React props object passed from parent
+ * @param {Object} props.step - The authentication "step" object from ForgeRock's SDK
+ * @returns {Object} - React JSX view
+ */
+
+function UsernamePassword(props) {
+  var usernameCb = props.step.getCallbackOfType('NameCallback');
+  var passwordCb = props.step.getCallbackOfType('PasswordCallback');
+  var usernameLabel = usernameCb.getPrompt();
+  var passwordLabel = passwordCb.getPrompt();
+  /**
+   * @function submitForm - Handles the submission of the form
+   * @param {Object} event - Synthetic event object from the DOM event
+   */
+
+  function submitForm(event) {
+    // Prevent a traditional form submission
+    event.preventDefault();
+    var un = event.target.elements.username.value;
+    var pw = event.target.elements.password.value;
+    usernameCb.setName(un);
+    passwordCb.setPassword(pw); // Call the parent function with the captured data
+
+    props.action(props.step);
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    id: "page_body"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    onSubmit: submitForm
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    htmlFor: "usernameInput"
+  }, usernameLabel), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "username",
+    name: "username",
+    className: "form-control",
+    id: "usernameInput",
+    "aria-describedby": "emailHelp"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    htmlFor: "passwordInput"
+  }, passwordLabel), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "password",
+    name: "password",
+    className: "form-control",
+    id: "passwordInput"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "submit",
+    className: "btn btn-primary"
+  }, "Submit")));
+}
+
+/***/ }),
+
+/***/ "./client/components/username.js":
+/*!***************************************!*\
+  !*** ./client/components/username.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Username; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/*
+ * fecapp
+ *
+ * username.js
+ *
+ * Copyright (c) 2020 ForgeRock. All rights reserved.
+ * This software may be modified and distributed under the terms
+ * of the MIT license. See the LICENSE file for details.
+ */
+
+/**
+ * @function Username- React component used for displaying username callback
+ * @param {Object} props - React props object passed from parent
+ * @param {Object} props.step - The authentication "step" object from ForgeRock's SDK
+ * @returns {Object} - React JSX view
+ */
+
+function Username(props) {
+  var usernameCb = props.step.getCallbackOfType('NameCallback');
+  var usernameLabel = usernameCb.getPrompt();
+  /**
+   * @function setValue - Sets the value on the callback on element blur (lose focus)
+   * @param {Object} event
+   */
+
+  function setValue(event) {
+    usernameCb.setName(event.target.value);
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    htmlFor: "usernameInput"
+  }, usernameLabel), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    onBlur: setValue,
+    type: "username",
+    name: "username",
+    className: "form-control",
+    id: "usernameInput",
+    "aria-describedby": "emailHelp"
+  }));
+}
+
+/***/ }),
+
+/***/ "./client/constants.js":
+/*!*****************************!*\
+  !*** ./client/constants.js ***!
+  \*****************************/
+/*! exports provided: AM_URL, API_URL, REALM_PATH, SESSION_URL */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AM_URL", function() { return AM_URL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "API_URL", function() { return API_URL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REALM_PATH", function() { return REALM_PATH; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SESSION_URL", function() { return SESSION_URL; });
+/*
+ * fecapp
+ *
+ * constants.js
+ *
+ * Copyright (c) 2020 ForgeRock. All rights reserved.
+ * This software may be modified and distributed under the terms
+ * of the MIT license. See the LICENSE file for details.
+ */
+var AM_URL = 'https://default.iam.example.com:51927/am/';
+var API_URL = 'https://api.example.com:9444';
+var REALM_PATH = 'root';
+var SESSION_URL = "".concat(AM_URL, "json/realms/root/sessions");
+
+/***/ }),
+
+/***/ "./client/index.js":
+/*!*************************!*\
+  !*** ./client/index.js ***!
+  \*************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _forgerock_javascript_sdk__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @forgerock/javascript-sdk */ "./node_modules/@forgerock/javascript-sdk/lib-esm/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _app_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app.js */ "./client/app.js");
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./constants.js */ "./client/constants.js");
+/* harmony import */ var _state_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./state.js */ "./client/state.js");
+/*
+ * fecapp
+ *
+ * index.js
+ *
+ * Copyright (c) 2020 ForgeRock. All rights reserved.
+ * This software may be modified and distributed under the terms
+ * of the MIT license. See the LICENSE file for details.
+ */
+
+
+
+
+
+
+console.log('Set AM configuration');
+/**
+ * Configure JS SDK for AM installation
+ */
+
+_forgerock_javascript_sdk__WEBPACK_IMPORTED_MODULE_0__["Config"].set({
+  clientId: 'WebOAuthClient',
+  redirectUri: 'https://sdkapp.example.com:9443/callback',
+  scope: 'openid profile email',
+  serverConfig: {
+    baseUrl: _constants_js__WEBPACK_IMPORTED_MODULE_4__["AM_URL"],
+    timeout: '30000'
+  },
+  realmPath: _constants_js__WEBPACK_IMPORTED_MODULE_4__["REALM_PATH"],
+  tree: 'UsernamePassword'
+}); // It's worth noting that all values are strings in session or localStorage.
+
+var authenticatedString = window.sessionStorage.getItem('sdk_authenticated');
+var currentPage = new URL(window.location.href).pathname.slice(1);
+/**
+ * @function Init - Initializes React and global state
+ * @returns {Object} - React JSX view
+ */
+
+function Init() {
+  /**
+   * This initializes the global state with React's Context API
+   * This can be useful to "hydrate" the state with stored data,
+   * like this authentication status stored in sessionStorage.
+   */
+  var stateMgmt = Object(_state_js__WEBPACK_IMPORTED_MODULE_5__["useStateMgmt"])(authenticatedString === 'true', currentPage);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_state_js__WEBPACK_IMPORTED_MODULE_5__["AppContext"].Provider, {
+    value: stateMgmt
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_app_js__WEBPACK_IMPORTED_MODULE_3__["default"], null));
+}
+
+react_dom__WEBPACK_IMPORTED_MODULE_2___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(Init, null), document.getElementById('root'));
+
+/***/ }),
+
+/***/ "./client/middleware.js":
+/*!******************************!*\
+  !*** ./client/middleware.js ***!
+  \******************************/
+/*! exports provided: checkSession, checkAccessToken */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "checkSession", function() { return checkSession; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "checkAccessToken", function() { return checkAccessToken; });
+/* harmony import */ var _forgerock_javascript_sdk__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @forgerock/javascript-sdk */ "./node_modules/@forgerock/javascript-sdk/lib-esm/index.js");
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants.js */ "./client/constants.js");
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+/*
+ * fecapp
+ *
+ * middleware.js
+ *
+ * Copyright (c) 2020 ForgeRock. All rights reserved.
+ * This software may be modified and distributed under the terms
+ * of the MIT license. See the LICENSE file for details.
+ */
+
+
+/**
+ * @function checkSession - Auth middleware for protecting local routes
+ * @param {Object} ctx - The context object from a Page.js route
+ * @param {*} next - The function call to proceed to the next middleware
+ * @returns {void}
+ */
+
+function checkSession(_x, _x2) {
+  return _checkSession.apply(this, arguments);
+}
+/**
+ * @function checkAccessToken - Auth middleware for protecting local routes
+ * @param {Object} ctx - The context object from a Page.js route
+ * @param {*} next - The function call to proceed to the next middleware
+ */
+
+function _checkSession() {
+  _checkSession = _asyncToGenerator(function* (ctx, next) {
+    var json;
+
+    try {
+      var response = yield fetch("".concat(_constants_js__WEBPACK_IMPORTED_MODULE_1__["SESSION_URL"], "?_action=validate"), {
+        credentials: 'include',
+        headers: {
+          'content-type': 'application/json',
+          'accept-api-version': 'protocol=1.0,resource=2.0',
+          'x-requested-with': 'forgerock-sdk'
+        },
+        method: 'POST'
+      });
+      json = yield response.json();
+    } catch (err) {
+      console.error('User session has been revoked or expired');
+      json = {};
+    }
+
+    if (json.valid) {
+      ctx.setAuthentication(true);
+      next();
+    } else {
+      ctx.setAuthentication(false);
+      ctx.page.redirect('/login');
+    }
+  });
+  return _checkSession.apply(this, arguments);
+}
+
+function checkAccessToken(_x3, _x4) {
+  return _checkAccessToken.apply(this, arguments);
+}
+
+function _checkAccessToken() {
+  _checkAccessToken = _asyncToGenerator(function* (ctx, next) {
+    /**
+     * Call user info endpoint.Request will succeed if Access Token is valid
+     */
+    try {
+      yield _forgerock_javascript_sdk__WEBPACK_IMPORTED_MODULE_0__["UserManager"].getCurrentUser();
+      next();
+    } catch (err) {
+      ctx.setAuthentication(false);
+      ctx.page.redirect('/login');
+    }
+  });
+  return _checkAccessToken.apply(this, arguments);
+}
+
+/***/ }),
+
+/***/ "./client/request.js":
+/*!***************************!*\
+  !*** ./client/request.js ***!
+  \***************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return apiRequest; });
+/* harmony import */ var _forgerock_javascript_sdk__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @forgerock/javascript-sdk */ "./node_modules/@forgerock/javascript-sdk/lib-esm/index.js");
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants.js */ "./client/constants.js");
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+/*
+ * fecapp
+ *
+ * request.js
+ *
+ * Copyright (c) 2020 ForgeRock. All rights reserved.
+ * This software may be modified and distributed under the terms
+ * of the MIT license. See the LICENSE file for details.
+ */
+
+
+/**
+ * @function request - A convenience function for wrapping around HttpClient
+ * @param {string} resource - the resource path for the API server
+ * @param {string} method - the method (GET, POST, etc) for the API server
+ * @return {Object} - JSON response from API
+ */
+
+function apiRequest(_x, _x2) {
+  return _apiRequest.apply(this, arguments);
+}
+
+function _apiRequest() {
+  _apiRequest = _asyncToGenerator(function* (resource, method) {
+    var json;
+
+    try {
+      var response = yield _forgerock_javascript_sdk__WEBPACK_IMPORTED_MODULE_0__["HttpClient"].request({
+        url: "".concat(_constants_js__WEBPACK_IMPORTED_MODULE_1__["API_URL"], "/").concat(resource),
+        init: {
+          credentials: "include",
+          method: method
+        }
+      });
+      json = yield response.json();
+    } catch (err) {
+      json = {
+        error: err.message
+      };
+    }
+
+    return json;
+  });
+  return _apiRequest.apply(this, arguments);
+}
+
+/***/ }),
+
+/***/ "./client/routes.js":
+/*!**************************!*\
+  !*** ./client/routes.js ***!
+  \**************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return initRoutes; });
+/* harmony import */ var _forgerock_javascript_sdk__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @forgerock/javascript-sdk */ "./node_modules/@forgerock/javascript-sdk/lib-esm/index.js");
+/* harmony import */ var page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! page */ "./node_modules/page/page.js");
+/* harmony import */ var page__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(page__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _middleware_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./middleware.js */ "./client/middleware.js");
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+/*
+ * fecapp
+ *
+ * routes.js
+ *
+ * Copyright (c) 2020 ForgeRock. All rights reserved.
+ * This software may be modified and distributed under the terms
+ * of the MIT license. See the LICENSE file for details.
+ */
+
+
+
+/**
+ * @function initRoutes – initializes routes and route handlers
+ * @param {function} setAuthentication - sets boolean on global state for user authentication
+ * @param {function} setPage - sets requested page on global state
+ * @return {void}
+ *
+ * Other than the first * route, all routes just set the requested page value.
+ * The global state management handles the event and rerenders the views.
+ */
+
+function initRoutes(setAuthentication, setPage) {
+  /**
+   * A route handler that catches all routes. It's used to add
+   * state hooks to all route contexts, and then calls next pass
+   * event to the next matching route.
+   */
+  page__WEBPACK_IMPORTED_MODULE_1___default()('*', function addStateHooks(ctx, next) {
+    ctx.setAuthentication = setAuthentication;
+    ctx.setPage = setPage;
+    next();
+  });
+  /**
+   * Handles index (aka "root") route
+   */
+
+  page__WEBPACK_IMPORTED_MODULE_1___default()('/', function initialDisplay(ctx) {
+    console.log('In: home');
+    ctx.setPage('home');
+  });
+  /**
+   * Protected catalog route (via the checkSession middleware)
+   */
+
+  page__WEBPACK_IMPORTED_MODULE_1___default()('/catalog', _middleware_js__WEBPACK_IMPORTED_MODULE_2__["checkAccessToken"], /*#__PURE__*/function () {
+    var _catalog = _asyncToGenerator(function* (ctx) {
+      console.log('In: catalog');
+      ctx.setPage('catalog');
+    });
+
+    function catalog(_x) {
+      return _catalog.apply(this, arguments);
+    }
+
+    return catalog;
+  }());
+  /**
+   * Handles the login route
+   */
+
+  page__WEBPACK_IMPORTED_MODULE_1___default()('/login', function login(ctx) {
+    console.log('In: login');
+    ctx.setPage('login');
+  });
+  /**
+   * Handles logout route. This route doesn't have an
+   * associated view that renders to screen.
+   */
+
+  page__WEBPACK_IMPORTED_MODULE_1___default()('/logout', /*#__PURE__*/function () {
+    var _logout = _asyncToGenerator(function* (ctx) {
+      console.log('In: logout');
+
+      try {
+        yield _forgerock_javascript_sdk__WEBPACK_IMPORTED_MODULE_0__["FRUser"].logout();
+        ctx.setAuthentication(false);
+        ctx.page.redirect('/?action=logout');
+      } catch (error) {
+        console.error(error);
+      }
+    });
+
+    function logout(_x2) {
+      return _logout.apply(this, arguments);
+    }
+
+    return logout;
+  }());
+  /**
+   * Configure Page.js options
+   * The "dispatch" option handles initializing within a route, but causes
+   * unnecessary rerenders, so setting to false for now.
+   * The "hashbang" option uses the old school, example.com/#!/home style routes.
+   * This works well enough for POCs when you don't have a "real" server.
+   */
+
+  page__WEBPACK_IMPORTED_MODULE_1___default()({
+    dispatch: false,
+    hashbang: false
+  });
+}
+
+/***/ }),
+
+/***/ "./client/state.js":
+/*!*************************!*\
+  !*** ./client/state.js ***!
+  \*************************/
+/*! exports provided: useStateMgmt, AppContext */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useStateMgmt", function() { return useStateMgmt; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppContext", function() { return AppContext; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _routes_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./routes.js */ "./client/routes.js");
+/*
+ * fecapp
+ *
+ * state.js
+ *
+ * Copyright (c) 2020 ForgeRock. All rights reserved.
+ * This software may be modified and distributed under the terms
+ * of the MIT license. See the LICENSE file for details.
+ */
+
+
+/**
+ * @function useStateMgmt - The global state/store for managing user authentication and page
+ * @param {boolean} isAuthenticated - Stored authentication state of user
+ * @returns {Array} - Global state
+ */
+
+function useStateMgmt(isAuthenticated, currentPage) {
+  /**
+   * Create two state properties for authentication and page.
+   * The destructing of the array results in index 0 having the state value,
+   * and index 1 having the "setter" method to set new state values.
+   */
+  var [authenticated, setAuthentication] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(isAuthenticated || false);
+  var [page, setPage] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(currentPage || 'home');
+  /**
+   * @function setAuthenticationWrapper - A wrapper for storing authentication in sessionStorage
+   * @param {boolean} value - current user authentication
+   * @returns {void}
+   */
+
+  function setAuthenticationWrapper(value) {
+    window.sessionStorage.setItem('sdk_authenticated', "".concat(value));
+    setAuthentication(value);
+  }
+  /**
+   * Since we are setting state from outside of React's scope (from routing layer),
+   * that would be considered a side-effect. Hence, the use of useEffect here.
+   */
+
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    Object(_routes_js__WEBPACK_IMPORTED_MODULE_1__["default"])(setAuthenticationWrapper, setPage);
+  });
+  /**
+   * returns an array with state object as index zero and setters as index one
+   */
+
+  return [{
+    authenticated,
+    page
+  }, {
+    setAuthentication: setAuthenticationWrapper,
+    setPage
+  }];
+}
+/**
+ * @constant AppContext - Creates React Context API
+ * This provides the capability to set a global state in React
+ * without having to pass the state as props through parent-child components.
+ */
+
+var AppContext = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createContext([{}, {}]);
+
+/***/ }),
+
+/***/ "./client/views/catalog.js":
+/*!*********************************!*\
+  !*** ./client/views/catalog.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return catalog; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_movie_card_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/movie-card.js */ "./client/components/movie-card.js");
+/* harmony import */ var _request_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../request.js */ "./client/request.js");
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+/*
+ * fecapp
+ *
+ * catalog.js
+ *
+ * Copyright (c) 2020 ForgeRock. All rights reserved.
+ * This software may be modified and distributed under the terms
+ * of the MIT license. See the LICENSE file for details.
+ */
+
+
+
+/**
+ * @function Catalog - React view component for retrieving and displaying movies
+ * @returns {Object} - React JSX view
+ */
+
+function catalog() {
+  /**
+   * Use local, component state for movies. Though, this could be moved to
+   * the global state if that's prefered over doing API calls in React views
+   */
+  var [movies, setMovies] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]);
+  var Movies = !movies.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Loading movie catalog ...") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, movies.map(function (movie) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_movie_card_js__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      key: movie.imdbID,
+      movie: movie
+    });
+  }));
+  /**
+   * Since we are making an API call, which is a side-effect,
+   * we will wrap this in a useEffect, which will rerender the
+   * view once the API request returns.
+   */
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    function getMovies() {
+      return _getMovies.apply(this, arguments);
+    }
+
+    function _getMovies() {
+      _getMovies = _asyncToGenerator(function* () {
+        // Request the movie catalog from our resource API
+        var movies = yield Object(_request_js__WEBPACK_IMPORTED_MODULE_2__["default"])('movies', 'GET');
+        setMovies(movies);
+      });
+      return _getMovies.apply(this, arguments);
+    }
+
+    if (!movies.length) {
+      getMovies();
+    }
+  });
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+    id: "page_header",
+    className: "featured_title"
+  }, "Enjoy our selection of movies"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    id: "page_body"
+  }, Movies));
+}
+
+/***/ }),
+
+/***/ "./client/views/home.js":
+/*!******************************!*\
+  !*** ./client/views/home.js ***!
+  \******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Home; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _state_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../state.js */ "./client/state.js");
+/*
+ * fecapp
+ *
+ * home.js
+ *
+ * Copyright (c) 2020 ForgeRock. All rights reserved.
+ * This software may be modified and distributed under the terms
+ * of the MIT license. See the LICENSE file for details.
+ */
+
+
+/**
+ * @function Home - Home React view
+ * @returns {Object} - React JSX view
+ */
+
+function Home() {
+  /**
+   * Collects the global state for detecting user auth for rendering
+   * appropriate navigational items.
+   */
+  var [state] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_state_js__WEBPACK_IMPORTED_MODULE_1__["AppContext"]);
+  var title = state.authenticated ? 'Hello, again!' : 'Hello, visitor!';
+  var message = state.authenticated ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Welcome back! Enjoy our ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    href: "/catalog"
+  }, "new catalog of movies")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    href: "/login"
+  }, "Sign in"), " or register to watch some amazing content!!");
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+    id: "page_header",
+    className: "featured_title"
+  }, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    id: "page_body"
+  }, message));
+}
+
+/***/ }),
+
+/***/ "./client/views/login.js":
+/*!*******************************!*\
+  !*** ./client/views/login.js ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Login; });
+/* harmony import */ var _forgerock_javascript_sdk__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @forgerock/javascript-sdk */ "./node_modules/@forgerock/javascript-sdk/lib-esm/index.js");
+/* harmony import */ var page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! page */ "./node_modules/page/page.js");
+/* harmony import */ var page__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(page__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _components_choice_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/choice.js */ "./client/components/choice.js");
+/* harmony import */ var _components_device_profile_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/device-profile.js */ "./client/components/device-profile.js");
+/* harmony import */ var _components_password_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/password.js */ "./client/components/password.js");
+/* harmony import */ var _components_unknown_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/unknown.js */ "./client/components/unknown.js");
+/* harmony import */ var _components_username_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/username.js */ "./client/components/username.js");
+/* harmony import */ var _components_username_password_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/username-password.js */ "./client/components/username-password.js");
+/* harmony import */ var _state_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../state.js */ "./client/state.js");
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+/*
+ * fecapp
+ *
+ * login.js
+ *
+ * Copyright (c) 2020 ForgeRock. All rights reserved.
+ * This software may be modified and distributed under the terms
+ * of the MIT license. See the LICENSE file for details.
+ */
+
+
+
+
+
+
+
+
+
+
+/**
+ * @function Login - React view for managing the user authentication journey
+ * @returns {Object} - React JSX view
+ */
+
+function Login() {
+  /**
+   * Compose the state used in this view.
+   * First, we will use the global state methods found in the App Context
+   * Then, we will create local state to manage the login journey. The
+   * underscore is an unused variable, since we don't need the current state.
+   */
+  var [_, methods] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useContext"])(_state_js__WEBPACK_IMPORTED_MODULE_9__["AppContext"]);
+  var [step, setStep] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])(null);
+  /**
+   * Component types
+   * StageComponent is intended for uniquely rendering a Step that is
+   * defined by the stage property of a page node.
+   * StepComponents are generic callback components that will be
+   * generically rendered.
+   * MessageComponent is intended for simply rendering messages to screen.
+   */
+
+  var StageComponent;
+  var StepComponents = [];
+  var MessageComponent;
+  var title;
+  /**
+   * @function submitStep - Handles the submission of the step to AM
+   * @param {Object} previousStep - Previous step in the login journey
+   */
+
+  function submitStep(_x) {
+    return _submitStep.apply(this, arguments);
+  }
+  /**
+   * Since we have API calls to AM, we need to handle these requests as side-effects
+   * This will allow the view to render, but update/rerender after the request completes
+   */
+
+
+  function _submitStep() {
+    _submitStep = _asyncToGenerator(function* (previousStep) {
+      var nextStep = yield _forgerock_javascript_sdk__WEBPACK_IMPORTED_MODULE_0__["FRAuth"].next(previousStep);
+      setStep(nextStep);
+    });
+    return _submitStep.apply(this, arguments);
+  }
+
+  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
+    /**
+     * @function getInitialStep - The function to call when there's no previous step
+     */
+    function getInitialStep() {
+      return _getInitialStep.apply(this, arguments);
+    }
+    /**
+     * @function completeAuth - The function to call when we get a LoginSuccess
+     */
+
+
+    function _getInitialStep() {
+      _getInitialStep = _asyncToGenerator(function* () {
+        var nextStep = yield _forgerock_javascript_sdk__WEBPACK_IMPORTED_MODULE_0__["FRAuth"].next();
+        setStep(nextStep);
+      });
+      return _getInitialStep.apply(this, arguments);
+    }
+
+    function completeAuth() {
+      return _completeAuth.apply(this, arguments);
+    }
+    /**
+     * Condition for handling start and stop of login journey.
+     * Here's where you should add more error handling.
+     */
+
+
+    function _completeAuth() {
+      _completeAuth = _asyncToGenerator(function* () {
+        yield _forgerock_javascript_sdk__WEBPACK_IMPORTED_MODULE_0__["TokenManager"].getTokens({
+          forceRenew: true
+        });
+        methods.setAuthentication(true);
+        page__WEBPACK_IMPORTED_MODULE_1___default.a.redirect('/');
+      });
+      return _completeAuth.apply(this, arguments);
+    }
+
+    if (!step) {
+      getInitialStep();
+    } else if (step.type === 'LoginSuccess') {
+      completeAuth();
+    }
+  });
+  /**
+   * Render conditions for presenting appropriate views to user.
+   * Adding more steps to a journey would mean more conditions
+   * to add here. More error conditions would be good here too.
+   */
+
+  if (!step) {
+    /**
+     * Since there is no step information we need to call AM to retrieve the
+     * instructions for rendering the login form.
+     */
+    title = 'Loading ... ';
+
+    MessageComponent = function Loading() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("p", null, "Checking session ...");
+    };
+  } else if (step.type === 'LoginSuccess') {
+    title = 'Hello again!';
+
+    MessageComponent = function Authenticated(props) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", {
+        id: "page_body"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("p", null, "Redirecting you back to our home page ... "));
+    };
+  } else if (step.type === 'LoginFailure') {
+    title = 'Login failure!';
+
+    MessageComponent = function Error() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("p", null, "It looks like there was a login error.");
+    };
+  } else if (!(step.getStage() === undefined)) {
+    /**
+     * Since a stage value is used, let's map the stage to an
+     * appropriate StageComponent as it will need to be
+     * rendered uniquely, rather than generically.
+     */
+    if (step.getStage() === 'UsernamePassword') {
+      title = 'Welcome. Please enter your credentials';
+      StageComponent = _components_username_password_js__WEBPACK_IMPORTED_MODULE_8__["default"];
+    } else {
+      title = 'Oops, sorry!';
+
+      MessageComponent = function Error() {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("p", null, "Stage unknown.");
+      };
+    }
+  } else if (step.callbacks.length > 0) {
+    /**
+     * Iterate through callbacks mapping the callback to the
+     * appropriate callback component, pushing that component
+     * the StepComponent's array.
+     */
+    step.callbacks.map(function (callback) {
+      switch (callback.getType()) {
+        case "ChoiceCallback":
+          StepComponents.push(_components_choice_js__WEBPACK_IMPORTED_MODULE_3__["default"]);
+          break;
+
+        case "DeviceProfileCallback":
+          StepComponents.push(_components_device_profile_js__WEBPACK_IMPORTED_MODULE_4__["default"]);
+          break;
+
+        case "NameCallback":
+          StepComponents.push(_components_username_js__WEBPACK_IMPORTED_MODULE_7__["default"]);
+          break;
+
+        case "PasswordCallback":
+          StepComponents.push(_components_password_js__WEBPACK_IMPORTED_MODULE_5__["default"]);
+          break;
+
+        default:
+          // If we don't recognize the callback, render a warning
+          StepComponents.push(_components_unknown_js__WEBPACK_IMPORTED_MODULE_6__["default"]);
+      }
+    });
+  } else {
+    title = 'Oops, sorry!';
+
+    MessageComponent = function Error() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("p", null, "It looks like there was an error.");
+    };
+  }
+  /**
+   * Check if this is a stage, which will render its own form,
+   * or a single step or compound step (more than 1 callback).
+   */
+
+
+  if (MessageComponent) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("h2", {
+      id: "page_header",
+      className: "featured_title"
+    }, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(MessageComponent, {
+      step: step,
+      action: submitStep
+    }));
+  } else if (StageComponent) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("h2", {
+      id: "page_header",
+      className: "featured_title"
+    }, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(StageComponent, {
+      step: step,
+      action: submitStep
+    }));
+  } else {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("h2", {
+      id: "page_header",
+      className: "featured_title"
+    }, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", {
+      id: "page_body"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("form", {
+      onSubmit: function onSubmit(event) {
+        event.preventDefault();
+        submitStep(step);
+      }
+    }, StepComponents.map(function (Component, idx) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(Component, {
+        key: idx,
+        step: step
+      });
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("button", {
+      type: "submit",
+      className: "btn btn-primary"
+    }, "Submit"))));
+  }
+}
+
+/***/ }),
 
 /***/ "./node_modules/@forgerock/javascript-sdk/lib-esm/auth/enums.js":
 /*!**********************************************************************!*\
@@ -7915,7 +9443,7 @@ module.exports = ReactPropTypesSecret;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/** @license React v16.13.1
+/** @license React v16.14.0
  * react-dom.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -32485,7 +34013,7 @@ function injectIntoDevTools(devToolsConfig) {
     // Enables DevTools to append owner stacks to error messages in DEV mode.
     getCurrentFiber:  function () {
       return current;
-    } 
+    }
   }));
 }
 var IsSomeRendererActing$1 = ReactSharedInternals.IsSomeRendererActing;
@@ -32837,7 +34365,7 @@ implementation) {
   };
 }
 
-var ReactVersion = '16.13.1';
+var ReactVersion = '16.14.0';
 
 setAttemptUserBlockingHydration(attemptUserBlockingHydration$1);
 setAttemptContinuousHydration(attemptContinuousHydration$1);
@@ -32984,7 +34512,7 @@ if (false) {} else {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/** @license React v16.13.1
+/** @license React v16.14.0
  * react.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -33004,7 +34532,7 @@ if (true) {
 var _assign = __webpack_require__(/*! object-assign */ "./node_modules/object-assign/index.js");
 var checkPropTypes = __webpack_require__(/*! prop-types/checkPropTypes */ "./node_modules/prop-types/checkPropTypes.js");
 
-var ReactVersion = '16.13.1';
+var ReactVersion = '16.14.0';
 
 // The Symbol used to tag the ReactElement-like types. If there is no native Symbol
 // nor polyfill, then a plain number is used for performance.
@@ -36179,1123 +37707,6 @@ if (false) {} else {
   module.exports = __webpack_require__(/*! ./cjs/scheduler-tracing.development.js */ "./node_modules/scheduler/cjs/scheduler-tracing.development.js");
 }
 
-
-/***/ }),
-
-/***/ "./src/app.js":
-/*!********************!*\
-  !*** ./src/app.js ***!
-  \********************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return App; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _views_catalog_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./views/catalog.js */ "./src/views/catalog.js");
-/* harmony import */ var _components_header_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/header.js */ "./src/components/header.js");
-/* harmony import */ var _views_home_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./views/home.js */ "./src/views/home.js");
-/* harmony import */ var _views_login_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./views/login.js */ "./src/views/login.js");
-/* harmony import */ var _components_footer_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/footer.js */ "./src/components/footer.js");
-/* harmony import */ var _state_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./state.js */ "./src/state.js");
-/*
- * fecapp
- *
- * app.js
- *
- * Copyright (c) 2020 ForgeRock. All rights reserved.
- * This software may be modified and distributed under the terms
- * of the MIT license. See the LICENSE file for details.
- */
-
-
-
-
-
-
-
-/**
- * @function App - Application React view
- * @returns {Object} - React JSX view
- */
-
-function App() {
-  var [state] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_state_js__WEBPACK_IMPORTED_MODULE_6__["AppContext"]);
-  var Main;
-
-  switch (state.page) {
-    case 'home':
-      Main = _views_home_js__WEBPACK_IMPORTED_MODULE_3__["default"];
-      break;
-
-    case 'catalog':
-      Main = _views_catalog_js__WEBPACK_IMPORTED_MODULE_1__["default"];
-      break;
-
-    case 'login':
-      Main = _views_login_js__WEBPACK_IMPORTED_MODULE_4__["default"];
-      break;
-
-    default:
-      Main = _views_home_js__WEBPACK_IMPORTED_MODULE_3__["default"];
-  }
-
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_header_js__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-    id: "content"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "featured_slider"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Main, null)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_footer_js__WEBPACK_IMPORTED_MODULE_5__["default"], null));
-}
-
-/***/ }),
-
-/***/ "./src/components/footer.js":
-/*!**********************************!*\
-  !*** ./src/components/footer.js ***!
-  \**********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Footer; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/*
- * fecapp
- *
- * footer.js
- *
- * Copyright (c) 2020 ForgeRock. All rights reserved.
- * This software may be modified and distributed under the terms
- * of the MIT license. See the LICENSE file for details.
- */
-
-/**
- * @function Footer - React footer view
- * @returns {Object} - React JSX view
- */
-
-function Footer() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("footer", {
-    id: "footer"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "footer_top"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "row"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "col-lg-3 col-md-3 col-sm3"
-  })))));
-}
-;
-
-/***/ }),
-
-/***/ "./src/components/header.js":
-/*!**********************************!*\
-  !*** ./src/components/header.js ***!
-  \**********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Header; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _state_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../state.js */ "./src/state.js");
-/*
- * fecapp
- *
- * header.js
- *
- * Copyright (c) 2020 ForgeRock. All rights reserved.
- * This software may be modified and distributed under the terms
- * of the MIT license. See the LICENSE file for details.
- */
-
-
-/**
- * @function Header - Header React view
- * @returns {Object} - React JSX view
- */
-
-function Header() {
-  /**
-   * Collects the global state for detecting user auth for rendering
-   * appropriate navigational items.
-   */
-  var [state] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_state_js__WEBPACK_IMPORTED_MODULE_1__["AppContext"]);
-  var CatalogItem;
-  var SignInOrOutItem;
-  /**
-   * Render different navigational items depending on authenticated status
-   */
-
-  switch (state.authenticated) {
-    case true:
-      CatalogItem = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "/catalog"
-      }, "Browse"));
-      SignInOrOutItem = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "/logout"
-      }, "Log out"));
-      break;
-
-    default:
-      CatalogItem = null;
-      SignInOrOutItem = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "/login"
-      }, "Sign In"));
-  }
-
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    className: "scrollToTop",
-    href: "#"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "fa fa-angle-up"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
-    id: "header"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
-    className: "navbar navbar-default navbar-static-top",
-    role: "navigation"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "navbar-header"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    type: "button",
-    className: "navbar-toggle collapsed",
-    "data-toggle": "collapse",
-    "data-target": "#navbar",
-    "aria-expanded": "false",
-    "aria-controls": "navbar"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-    className: "sr-only"
-  }, "Toggle navigation"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-    className: "icon-bar"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    className: "navbar-brand"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    src: "img/FEC_logo.png",
-    height: "50",
-    alt: ""
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    id: "navbar",
-    className: "navbar-collapse collapse"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-    id: "menu",
-    className: "nav navbar-nav custom_nav"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    href: "/"
-  }, "Home")), CatalogItem, SignInOrOutItem))))));
-}
-
-/***/ }),
-
-/***/ "./src/components/movie-card.js":
-/*!**************************************!*\
-  !*** ./src/components/movie-card.js ***!
-  \**************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return MovieCard; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/*
- * fecapp
- *
- * movie-card.js
- *
- * Copyright (c) 2020 ForgeRock. All rights reserved.
- * This software may be modified and distributed under the terms
- * of the MIT license. See the LICENSE file for details.
- */
-
-/**
- * @function MovieCard - Used for display a single movie and its details
- * @param {Object} props - The object representing React's props
- * @param {Object} props.movie - The movie object passed from the parent component
- * @returns {Object} - React JSX view
- */
-
-function MovieCard(_ref) {
-  var {
-    movie
-  } = _ref;
-  // CSS for the card, this could be moved to a CSS file, if desired
-  var cardStyle = {
-    display: 'inline-block',
-    padding: '2em',
-    width: '33%'
-  };
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-    className: "card",
-    style: cardStyle
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    alt: "Image from ".concat(movie.Title),
-    className: "card-img-top",
-    src: movie.Images[0],
-    style: {
-      width: '100%'
-    }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card-body"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
-    className: "card-title"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Title: ", movie.Title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "card-text"
-  }, "Genre: ", movie.Genre), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    className: "btn btn-primary"
-  }, "Watch Movie")));
-}
-
-/***/ }),
-
-/***/ "./src/components/username-password.js":
-/*!*********************************************!*\
-  !*** ./src/components/username-password.js ***!
-  \*********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return UsernamePassword; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/*
- * fecapp
- *
- * username-password.js
- *
- * Copyright (c) 2020 ForgeRock. All rights reserved.
- * This software may be modified and distributed under the terms
- * of the MIT license. See the LICENSE file for details.
- */
-
-/**
- * @function UsernamePassword - React component used for displaying username and password step
- * @param {Object} props - React props object passed from parent
- * @param {Object} props.step - The authentication "step" object from ForgeRock's SDK
- * @returns {Object} - React JSX view
- */
-
-function UsernamePassword(props) {
-  /**
-   * @function submitForm - Handles the submission of the form
-   * @param {Object} event - Synthetic event object from the DOM event
-   */
-  function submitForm(event) {
-    // Prevent a traditional form submission
-    event.preventDefault();
-    var un = event.target.elements.username.value;
-    var pw = event.target.elements.password.value; // Call the parent function with the captured data
-
-    props.action(un, pw, props.step);
-  }
-
-  var usernameLabel = props.step.getCallbackOfType('NameCallback').getPrompt();
-  var passwordLabel = props.step.getCallbackOfType('PasswordCallback').getPrompt();
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    id: "page_body"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-    onSubmit: submitForm
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "form-group"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-    htmlFor: "usernameInput"
-  }, usernameLabel), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    type: "username",
-    name: "username",
-    className: "form-control",
-    id: "usernameInput",
-    "aria-describedby": "emailHelp"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "form-group"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-    htmlFor: "passwordInput"
-  }, passwordLabel), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    type: "password",
-    name: "password",
-    className: "form-control",
-    id: "passwordInput"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    type: "submit",
-    className: "btn btn-primary"
-  }, "Submit")));
-}
-
-/***/ }),
-
-/***/ "./src/constants.js":
-/*!**************************!*\
-  !*** ./src/constants.js ***!
-  \**************************/
-/*! exports provided: AM_URL, API_URL, REALM_PATH, SESSION_URL */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AM_URL", function() { return AM_URL; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "API_URL", function() { return API_URL; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REALM_PATH", function() { return REALM_PATH; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SESSION_URL", function() { return SESSION_URL; });
-/*
- * fecapp
- *
- * constants.js
- *
- * Copyright (c) 2020 ForgeRock. All rights reserved.
- * This software may be modified and distributed under the terms
- * of the MIT license. See the LICENSE file for details.
- */
-var AM_URL = 'https://openam-sdkspaas.forgeblocks.com/am/';
-var API_URL = 'https://api.example.com:9443';
-var REALM_PATH = 'alpha';
-var SESSION_URL = "".concat(AM_URL, "json/realms/root/sessions");
-
-/***/ }),
-
-/***/ "./src/index.js":
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _forgerock_javascript_sdk__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @forgerock/javascript-sdk */ "./node_modules/@forgerock/javascript-sdk/lib-esm/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _app_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app.js */ "./src/app.js");
-/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./constants.js */ "./src/constants.js");
-/* harmony import */ var _state_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./state.js */ "./src/state.js");
-/*
- * fecapp
- *
- * index.js
- *
- * Copyright (c) 2020 ForgeRock. All rights reserved.
- * This software may be modified and distributed under the terms
- * of the MIT license. See the LICENSE file for details.
- */
-
-
-
-
-
-
-console.log('Set AM configuration');
-/**
- * Configure JS SDK for AM installation
- */
-
-_forgerock_javascript_sdk__WEBPACK_IMPORTED_MODULE_0__["Config"].set({
-  clientId: 'SDKOAuthClient',
-  redirectUri: 'https://sdkapp.example.com:8443/_callback',
-  scope: 'openid profile email',
-  serverConfig: {
-    baseUrl: _constants_js__WEBPACK_IMPORTED_MODULE_4__["AM_URL"],
-    timeout: '30000'
-  },
-  realmPath: _constants_js__WEBPACK_IMPORTED_MODULE_4__["REALM_PATH"],
-  tree: 'Test'
-}); // It's worth noting that all values are strings in session or localStorage.
-
-var authenticatedString = window.sessionStorage.getItem('sdk_authenticated');
-var currentPage = new URL(window.location.href).pathname.slice(1);
-/**
- * @function Init - Initializes React and global state
- * @returns {Object} - React JSX view
- */
-
-function Init() {
-  /**
-   * This initializes the global state with React's Context API
-   * This can be useful to "hydrate" the state with stored data,
-   * like this authentication status stored in sessionStorage.
-   */
-  var stateMgmt = Object(_state_js__WEBPACK_IMPORTED_MODULE_5__["useStateMgmt"])(authenticatedString === 'true', currentPage);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_state_js__WEBPACK_IMPORTED_MODULE_5__["AppContext"].Provider, {
-    value: stateMgmt
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_app_js__WEBPACK_IMPORTED_MODULE_3__["default"], null));
-}
-
-react_dom__WEBPACK_IMPORTED_MODULE_2___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(Init, null), document.getElementById('root'));
-
-/***/ }),
-
-/***/ "./src/middleware.js":
-/*!***************************!*\
-  !*** ./src/middleware.js ***!
-  \***************************/
-/*! exports provided: checkSession, checkAccessToken */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "checkSession", function() { return checkSession; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "checkAccessToken", function() { return checkAccessToken; });
-/* harmony import */ var _forgerock_javascript_sdk__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @forgerock/javascript-sdk */ "./node_modules/@forgerock/javascript-sdk/lib-esm/index.js");
-/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants.js */ "./src/constants.js");
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-/*
- * fecapp
- *
- * middleware.js
- *
- * Copyright (c) 2020 ForgeRock. All rights reserved.
- * This software may be modified and distributed under the terms
- * of the MIT license. See the LICENSE file for details.
- */
-
-
-/**
- * @function checkSession - Auth middleware for protecting local routes
- * @param {Object} ctx - The context object from a Page.js route
- * @param {*} next - The function call to proceed to the next middleware
- * @returns {void}
- */
-
-function checkSession(_x, _x2) {
-  return _checkSession.apply(this, arguments);
-}
-/**
- * @function checkAccessToken - Auth middleware for protecting local routes
- * @param {Object} ctx - The context object from a Page.js route
- * @param {*} next - The function call to proceed to the next middleware
- */
-
-function _checkSession() {
-  _checkSession = _asyncToGenerator(function* (ctx, next) {
-    var json;
-
-    try {
-      var response = yield fetch("".concat(_constants_js__WEBPACK_IMPORTED_MODULE_1__["SESSION_URL"], "?_action=validate"), {
-        credentials: 'include',
-        headers: {
-          'content-type': 'application/json',
-          'accept-api-version': 'protocol=1.0,resource=2.0',
-          'x-requested-with': 'forgerock-sdk'
-        },
-        method: 'POST'
-      });
-      json = yield response.json();
-    } catch (err) {
-      console.error('User session has been revoked or expired');
-      json = {};
-    }
-
-    if (json.valid) {
-      ctx.setAuthentication(true);
-      next();
-    } else {
-      ctx.setAuthentication(false);
-      ctx.page.redirect('/login');
-    }
-  });
-  return _checkSession.apply(this, arguments);
-}
-
-function checkAccessToken(_x3, _x4) {
-  return _checkAccessToken.apply(this, arguments);
-}
-
-function _checkAccessToken() {
-  _checkAccessToken = _asyncToGenerator(function* (ctx, next) {
-    /**
-     * Call user info endpoint.Request will succeed if Access Token is valid
-     */
-    try {
-      yield _forgerock_javascript_sdk__WEBPACK_IMPORTED_MODULE_0__["UserManager"].getCurrentUser();
-      next();
-    } catch (err) {
-      ctx.setAuthentication(false);
-      ctx.page.redirect('/login');
-    }
-  });
-  return _checkAccessToken.apply(this, arguments);
-}
-
-/***/ }),
-
-/***/ "./src/request.js":
-/*!************************!*\
-  !*** ./src/request.js ***!
-  \************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return apiRequest; });
-/* harmony import */ var _forgerock_javascript_sdk__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @forgerock/javascript-sdk */ "./node_modules/@forgerock/javascript-sdk/lib-esm/index.js");
-/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants.js */ "./src/constants.js");
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-/*
- * fecapp
- *
- * request.js
- *
- * Copyright (c) 2020 ForgeRock. All rights reserved.
- * This software may be modified and distributed under the terms
- * of the MIT license. See the LICENSE file for details.
- */
-
-
-/**
- * @function request - A convenience function for wrapping around HttpClient
- * @param {string} resource - the resource path for the API server
- * @param {string} method - the method (GET, POST, etc) for the API server
- * @return {Object} - JSON response from API
- */
-
-function apiRequest(_x, _x2) {
-  return _apiRequest.apply(this, arguments);
-}
-
-function _apiRequest() {
-  _apiRequest = _asyncToGenerator(function* (resource, method) {
-    var json;
-
-    try {
-      var response = yield _forgerock_javascript_sdk__WEBPACK_IMPORTED_MODULE_0__["HttpClient"].request({
-        url: "".concat(_constants_js__WEBPACK_IMPORTED_MODULE_1__["API_URL"], "/").concat(resource),
-        init: {
-          credentials: "include",
-          method: method
-        }
-      });
-      json = yield response.json();
-    } catch (err) {
-      json = {
-        error: err.message
-      };
-    }
-
-    return json;
-  });
-  return _apiRequest.apply(this, arguments);
-}
-
-/***/ }),
-
-/***/ "./src/routes.js":
-/*!***********************!*\
-  !*** ./src/routes.js ***!
-  \***********************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return initRoutes; });
-/* harmony import */ var _forgerock_javascript_sdk__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @forgerock/javascript-sdk */ "./node_modules/@forgerock/javascript-sdk/lib-esm/index.js");
-/* harmony import */ var page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! page */ "./node_modules/page/page.js");
-/* harmony import */ var page__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(page__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _middleware_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./middleware.js */ "./src/middleware.js");
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-/*
- * fecapp
- *
- * routes.js
- *
- * Copyright (c) 2020 ForgeRock. All rights reserved.
- * This software may be modified and distributed under the terms
- * of the MIT license. See the LICENSE file for details.
- */
-
-
-
-/**
- * @function initRoutes – initializes routes and route handlers
- * @param {function} setAuthentication - sets boolean on global state for user authentication
- * @param {function} setPage - sets requested page on global state
- * @return {void}
- *
- * Other than the first * route, all routes just set the requested page value.
- * The global state management handles the event and rerenders the views.
- */
-
-function initRoutes(setAuthentication, setPage) {
-  /**
-   * A route handler that catches all routes. It's used to add
-   * state hooks to all route contexts, and then calls next pass
-   * event to the next matching route.
-   */
-  page__WEBPACK_IMPORTED_MODULE_1___default()('*', function addStateHooks(ctx, next) {
-    ctx.setAuthentication = setAuthentication;
-    ctx.setPage = setPage;
-    next();
-  });
-  /**
-   * Handles index (aka "root") route
-   */
-
-  page__WEBPACK_IMPORTED_MODULE_1___default()('/', function initialDisplay(ctx) {
-    console.log('In: home');
-    ctx.setPage('home');
-  });
-  /**
-   * Protected catalog route (via the checkSession middleware)
-   */
-
-  page__WEBPACK_IMPORTED_MODULE_1___default()('/catalog', _middleware_js__WEBPACK_IMPORTED_MODULE_2__["checkAccessToken"], /*#__PURE__*/function () {
-    var _catalog = _asyncToGenerator(function* (ctx) {
-      console.log('In: catalog');
-      ctx.setPage('catalog');
-    });
-
-    function catalog(_x) {
-      return _catalog.apply(this, arguments);
-    }
-
-    return catalog;
-  }());
-  /**
-   * Handles the login route
-   */
-
-  page__WEBPACK_IMPORTED_MODULE_1___default()('/login', function login(ctx) {
-    console.log('In: login');
-    ctx.setPage('login');
-  });
-  /**
-   * Handles logout route. This route doesn't have an
-   * associated view that renders to screen.
-   */
-
-  page__WEBPACK_IMPORTED_MODULE_1___default()('/logout', /*#__PURE__*/function () {
-    var _logout = _asyncToGenerator(function* (ctx) {
-      console.log('In: logout');
-
-      try {
-        yield _forgerock_javascript_sdk__WEBPACK_IMPORTED_MODULE_0__["FRUser"].logout();
-        ctx.setAuthentication(false);
-        ctx.page.redirect('/?action=logout');
-      } catch (error) {
-        console.error(error);
-      }
-    });
-
-    function logout(_x2) {
-      return _logout.apply(this, arguments);
-    }
-
-    return logout;
-  }());
-  /**
-   * Configure Page.js options
-   * The "dispatch" option handles initializing within a route, but causes
-   * unnecessary rerenders, so setting to false for now.
-   * The "hashbang" option uses the old school, example.com/#!/home style routes.
-   * This works well enough for POCs when you don't have a "real" server.
-   */
-
-  page__WEBPACK_IMPORTED_MODULE_1___default()({
-    dispatch: false,
-    hashbang: false
-  });
-}
-
-/***/ }),
-
-/***/ "./src/state.js":
-/*!**********************!*\
-  !*** ./src/state.js ***!
-  \**********************/
-/*! exports provided: useStateMgmt, AppContext */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useStateMgmt", function() { return useStateMgmt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppContext", function() { return AppContext; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _routes_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./routes.js */ "./src/routes.js");
-/*
- * fecapp
- *
- * state.js
- *
- * Copyright (c) 2020 ForgeRock. All rights reserved.
- * This software may be modified and distributed under the terms
- * of the MIT license. See the LICENSE file for details.
- */
-
-
-/**
- * @function useStateMgmt - The global state/store for managing user authentication and page
- * @param {boolean} isAuthenticated - Stored authentication state of user
- * @returns {Array} - Global state
- */
-
-function useStateMgmt(isAuthenticated, currentPage) {
-  /**
-   * Create two state properties for authentication and page.
-   * The destructing of the array results in index 0 having the state value,
-   * and index 1 having the "setter" method to set new state values.
-   */
-  var [authenticated, setAuthentication] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(isAuthenticated || false);
-  var [page, setPage] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(currentPage || 'home');
-  /**
-   * @function setAuthenticationWrapper - A wrapper for storing authentication in sessionStorage
-   * @param {boolean} value - current user authentication
-   * @returns {void}
-   */
-
-  function setAuthenticationWrapper(value) {
-    window.sessionStorage.setItem('sdk_authenticated', "".concat(value));
-    setAuthentication(value);
-  }
-  /**
-   * Since we are setting state from outside of React's scope (from routing layer),
-   * that would be considered a side-effect. Hence, the use of useEffect here.
-   */
-
-
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    Object(_routes_js__WEBPACK_IMPORTED_MODULE_1__["default"])(setAuthenticationWrapper, setPage);
-  });
-  /**
-   * returns an array with state object as index zero and setters as index one
-   */
-
-  return [{
-    authenticated,
-    page
-  }, {
-    setAuthentication: setAuthenticationWrapper,
-    setPage
-  }];
-}
-/**
- * @constant AppContext - Creates React Context API
- * This provides the capability to set a global state in React
- * without having to pass the state as props through parent-child components.
- */
-
-var AppContext = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createContext([{}, {}]);
-
-/***/ }),
-
-/***/ "./src/views/catalog.js":
-/*!******************************!*\
-  !*** ./src/views/catalog.js ***!
-  \******************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Catalog; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_movie_card_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/movie-card.js */ "./src/components/movie-card.js");
-/* harmony import */ var _request_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../request.js */ "./src/request.js");
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-/*
- * fecapp
- *
- * catalog.js
- *
- * Copyright (c) 2020 ForgeRock. All rights reserved.
- * This software may be modified and distributed under the terms
- * of the MIT license. See the LICENSE file for details.
- */
-
-
-
-/**
- * @function Catalog - React view component for retrieving and displaying movies
- * @returns {Object} - React JSX view
- */
-
-function Catalog() {
-  /**
-   * Use local, component state for movies. Though, this could be moved to
-   * the global state if that's prefered over doing API calls in React views
-   */
-  var [movies, setMovies] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]);
-  var Movies = !movies.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Loading movie catalog ...") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, movies.map(function (movie) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_movie_card_js__WEBPACK_IMPORTED_MODULE_1__["default"], {
-      key: movie.imdbID,
-      movie: movie
-    });
-  }));
-  /**
-   * Since we are making an API call, which is a side-effect,
-   * we will wrap this in a useEffect, which will rerender the
-   * view once the API request returns.
-   */
-
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    function getMovies() {
-      return _getMovies.apply(this, arguments);
-    }
-
-    function _getMovies() {
-      _getMovies = _asyncToGenerator(function* () {
-        // Request the movie catalog from our resource API
-        var movies = yield Object(_request_js__WEBPACK_IMPORTED_MODULE_2__["default"])('movies', 'GET');
-        setMovies(movies);
-      });
-      return _getMovies.apply(this, arguments);
-    }
-
-    if (!movies.length) {
-      getMovies();
-    }
-  });
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
-    id: "page_header",
-    className: "featured_title"
-  }, "Enjoy our selection of movies"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    id: "page_body"
-  }, Movies));
-}
-
-/***/ }),
-
-/***/ "./src/views/home.js":
-/*!***************************!*\
-  !*** ./src/views/home.js ***!
-  \***************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Home; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _state_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../state.js */ "./src/state.js");
-/*
- * fecapp
- *
- * home.js
- *
- * Copyright (c) 2020 ForgeRock. All rights reserved.
- * This software may be modified and distributed under the terms
- * of the MIT license. See the LICENSE file for details.
- */
-
-
-/**
- * @function Home - Home React view
- * @returns {Object} - React JSX view
- */
-
-function Home() {
-  /**
-   * Collects the global state for detecting user auth for rendering
-   * appropriate navigational items.
-   */
-  var [state] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_state_js__WEBPACK_IMPORTED_MODULE_1__["AppContext"]);
-  var title = state.authenticated ? 'Hello, again!' : 'Hello, visitor!';
-  var message = state.authenticated ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Welcome back! Enjoy our ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    href: "/catalog"
-  }, "new catalog of movies")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    href: "/login"
-  }, "Sign in"), " or register to watch some amazing content!!");
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
-    id: "page_header",
-    className: "featured_title"
-  }, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    id: "page_body"
-  }, message));
-}
-
-/***/ }),
-
-/***/ "./src/views/login.js":
-/*!****************************!*\
-  !*** ./src/views/login.js ***!
-  \****************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Login; });
-/* harmony import */ var _forgerock_javascript_sdk__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @forgerock/javascript-sdk */ "./node_modules/@forgerock/javascript-sdk/lib-esm/index.js");
-/* harmony import */ var page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! page */ "./node_modules/page/page.js");
-/* harmony import */ var page__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(page__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _components_username_password_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/username-password.js */ "./src/components/username-password.js");
-/* harmony import */ var _state_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../state.js */ "./src/state.js");
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-/*
- * fecapp
- *
- * login.js
- *
- * Copyright (c) 2020 ForgeRock. All rights reserved.
- * This software may be modified and distributed under the terms
- * of the MIT license. See the LICENSE file for details.
- */
-
-
-
-
-
-/**
- * @function Login - React view for managing the user authentication journey
- * @returns {Object} - React JSX view
- */
-
-function Login() {
-  /**
-   * Compose the state used in this view.
-   * First, we will use the global state methods found in the App Context
-   * Then, we will create local state to manage the login journey. The
-   * underscore is an unused variable, since we don't need the current state.
-   */
-  var [_, methods] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useContext"])(_state_js__WEBPACK_IMPORTED_MODULE_4__["AppContext"]);
-  var [step, setStep] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])(null);
-  var Step;
-  var title;
-  /**
-   * @function submitStep - Handles the submission of the step to AM
-   * @param {string} un - Username
-   * @param {string} pw - Password
-   * @param {Object} previousStep - Previous step in the login journey
-   */
-
-  function submitStep(_x, _x2, _x3) {
-    return _submitStep.apply(this, arguments);
-  }
-  /**
-   * Since we have API calls to AM, we need to handle these requests as side-effects
-   * This will allow the view to render, but update/rerender after the request completes
-   */
-
-
-  function _submitStep() {
-    _submitStep = _asyncToGenerator(function* (un, pw, previousStep) {
-      previousStep.getCallbackOfType('NameCallback').setName(un);
-      previousStep.getCallbackOfType('PasswordCallback').setPassword(pw);
-      var nextStep = yield _forgerock_javascript_sdk__WEBPACK_IMPORTED_MODULE_0__["FRAuth"].next(previousStep);
-      setStep(nextStep);
-    });
-    return _submitStep.apply(this, arguments);
-  }
-
-  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
-    /**
-     * @function getInitialStep - The function to call when there's no previous step
-     */
-    function getInitialStep() {
-      return _getInitialStep.apply(this, arguments);
-    }
-    /**
-     * @function completeAuth - The function to call when we get a LoginSuccess
-     */
-
-
-    function _getInitialStep() {
-      _getInitialStep = _asyncToGenerator(function* () {
-        var nextStep = yield _forgerock_javascript_sdk__WEBPACK_IMPORTED_MODULE_0__["FRAuth"].next();
-        setStep(nextStep);
-      });
-      return _getInitialStep.apply(this, arguments);
-    }
-
-    function completeAuth() {
-      return _completeAuth.apply(this, arguments);
-    }
-    /**
-     * Condition for handling start and stop of login journey.
-     * Here's where you should add more error handling.
-     */
-
-
-    function _completeAuth() {
-      _completeAuth = _asyncToGenerator(function* () {
-        yield _forgerock_javascript_sdk__WEBPACK_IMPORTED_MODULE_0__["TokenManager"].getTokens({
-          forceRenew: true
-        });
-        methods.setAuthentication(true);
-        page__WEBPACK_IMPORTED_MODULE_1___default.a.redirect('/');
-      });
-      return _completeAuth.apply(this, arguments);
-    }
-
-    if (!step) {
-      getInitialStep();
-    } else if (step.type === 'LoginSuccess') {
-      completeAuth();
-    }
-  });
-  /**
-   * Render conditions for presenting appropriate views to user.
-   * Adding more steps to a journey would mean more conditions
-   * to add here. More error conditions would be good here too.
-   */
-
-  if (!step) {
-    title = 'Loading ... ';
-
-    Step = function Loading() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("p", null, "Checking session ...");
-    };
-  } else if (step.type === 'LoginSuccess') {
-    title = 'Hello again!';
-
-    Step = function Authenticated(props) {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", {
-        id: "page_body"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("p", null, "Redirecting you back to our home page ... "));
-    };
-  } else if (step.getStage() === 'UsernamePassword') {
-    title = 'Welcome. Please enter your credentials';
-    Step = _components_username_password_js__WEBPACK_IMPORTED_MODULE_3__["default"];
-  } else {
-    title = 'Oops, sorry!';
-
-    Step = function Error() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("p", null, "It looks like there was an error.");
-    };
-  }
-
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("h2", {
-    id: "page_header",
-    className: "featured_title"
-  }, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(Step, {
-    step: step,
-    action: submitStep
-  }));
-}
 
 /***/ })
 

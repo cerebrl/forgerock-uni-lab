@@ -22,15 +22,15 @@ console.log('Set AM configuration');
  * Configure JS SDK for AM installation
  */
 Config.set({
-  clientId: 'SDKOAuthClient',
-  redirectUri: 'https://sdkapp.example.com:8443/_callback',
+  clientId: 'WebOAuthClient',
+  redirectUri: 'https://sdkapp.example.com:9443/callback',
   scope: 'openid profile email',
   serverConfig: {
     baseUrl: AM_URL,
     timeout: '30000',
   },
   realmPath: REALM_PATH,
-  tree: 'Test',
+  tree: 'UsernamePassword',
 });
 
 // It's worth noting that all values are strings in session or localStorage.

@@ -17,6 +17,11 @@ import React from 'react';
  * @returns {Object} - React JSX view
  */
 export default function UsernamePassword(props) {
+  const usernameCb = props.step.getCallbackOfType('NameCallback');
+  const passwordCb = props.step.getCallbackOfType('PasswordCallback');
+  const usernameLabel = usernameCb.getPrompt();
+  const passwordLabel = passwordCb.getPrompt();
+
   /**
    * @function submitForm - Handles the submission of the form
    * @param {Object} event - Synthetic event object from the DOM event
@@ -27,12 +32,12 @@ export default function UsernamePassword(props) {
     const un = event.target.elements.username.value;
     const pw = event.target.elements.password.value
 
-    // Call the parent function with the captured data
-    props.action(un, pw, props.step);
-  }
+    usernameCb.setName(un);
+    passwordCb.setPassword(pw);
 
-  const usernameLabel = props.step.getCallbackOfType('NameCallback').getPrompt();
-  const passwordLabel = props.step.getCallbackOfType('PasswordCallback').getPrompt();
+    // Call the parent function with the captured data
+    props.action(props.step);
+  }
 
   return (
     <div id="page_body">

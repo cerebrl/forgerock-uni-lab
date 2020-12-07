@@ -12,13 +12,9 @@ import { FRAuth, TokenManager } from '@forgerock/javascript-sdk';
 import page from 'page';
 import React, { Fragment, useContext, useEffect, useState } from 'react';
 
-import Choice from '../components/choice.js';
-import DeviceProfile from '../components/device-profile.js';
-import Password from '../components/password.js';
-import Unknown from '../components/unknown.js';
-import Username from '../components/username.js';
 import UsernamePassword from '../components/username-password.js';
-
+import ChoiceCallback from '../components/choice-callback.js';
+import DeviceProfileCallback from '../components/device-profile-callback.js';
 import { AppContext } from '../state.js';
 
 /**
@@ -35,19 +31,9 @@ export default function Login() {
   const [_, methods] = useContext(AppContext);
   const [step, setStep] = useState(null);
 
-  /**
-   * Component types
-   * StageComponent is intended for uniquely rendering a Step that is
-   * defined by the stage property of a page node.
-   * StepComponents are generic callback components that will be
-   * generically rendered.
-   * MessageComponent is intended for simply rendering messages to screen.
-   */
-  let StageComponent;
-  let StepComponents = [];
-  let MessageComponent;
-
+  let Step;
   let title;
+  let idx = 0;
 
   /**
    * @function submitStep - Handles the submission of the step to AM
@@ -96,17 +82,13 @@ export default function Login() {
    * to add here. More error conditions would be good here too.
    */
   if (!step) {
-    /**
-     * Since there is no step information we need to call AM to retrieve the
-     * instructions for rendering the login form.
-     */
     title = 'Loading ... ';
-    MessageComponent = function Loading() {
+    Step = function Loading() {
       return <p>Checking session ...</p>;
     };
   } else if (step.type === 'LoginSuccess') {
     title = 'Hello again!';
-    MessageComponent = function Authenticated(props) {
+    Step = function Authenticated(props) {
       return (
         <div id="page_body">
           <p>Redirecting you back to our home page ... </p>
@@ -115,102 +97,47 @@ export default function Login() {
     };
   } else if (step.type === 'LoginFailure') {
     title = 'Login failure!';
-    MessageComponent = function Error() {
-    return (
-      <p>It looks like there was a login error.</p>
-    );
+    Step = function Error() {
+    return <p>It looks like there was a login error.</p>;
     };
   } else if (!(step.getStage() === undefined)) {
-    /**
-     * Since a stage value is used, let's map the stage to an
-     * appropriate StageComponent as it will need to be
-     * rendered uniquely, rather than generically.
-     */
     if (step.getStage() === 'UsernamePassword') {
       title = 'Welcome. Please enter your credentials';
-      StageComponent = UsernamePassword;
-    } else {
+      Step = UsernamePassword;
+    }
+    else {
       title = 'Oops, sorry!';
-      MessageComponent = function Error() {
-        return <p>Stage unknown.</p>;
-      };
+      Step = function Error() {
+      return <p>Stage unknown.</p>;
+    }; 
     }
   } else if (step.callbacks.length > 0) {
-    /**
-     * Iterate through callbacks mapping the callback to the
-     * appropriate callback component, pushing that component
-     * the StepComponent's array.
-     */
-    step.callbacks.map(function (callback) {
-      switch(callback.getType()){
+    //No stage defined
+    for (let i = 0; i < step.callbacks.length; i++) {
+      idx = i;
+      switch(step.callbacks[i].payload.type){
         case "ChoiceCallback":
-          StepComponents.push(Choice);
+          Step = ChoiceCallback;
           break;
         case "DeviceProfileCallback":
-          StepComponents.push(DeviceProfile);
-          break;
-        case "NameCallback":
-          StepComponents.push(Username);
-          break;
-        case "PasswordCallback":
-          StepComponents.push(Password);
+          Step = DeviceProfileCallback;
           break;
         default:
-          // If we don't recognize the callback, render a warning
-          StepComponents.push(Unknown);
       }
-    });
+    }
    } else {
     title = 'Oops, sorry!';
-    MessageComponent = function Error() {
+    Step = function Error() {
       return <p>It looks like there was an error.</p>;
     };
   }
 
-  /**
-   * Check if this is a stage, which will render its own form,
-   * or a single step or compound step (more than 1 callback).
-   */
-  if (MessageComponent) {
-    return (
-      <Fragment>
-        <h2 id="page_header" className="featured_title">
-          {title}
-        </h2>
-        <MessageComponent step={step} action={submitStep} />
-      </Fragment>
-    );
-  } else if (StageComponent) {
-    return (
-      <Fragment>
-        <h2 id="page_header" className="featured_title">
-          {title}
-        </h2>
-        <StageComponent step={step} action={submitStep} />
-      </Fragment>
-    );
-  } else {
-    return (
-      <Fragment>
-        <h2 id="page_header" className="featured_title">
-          {title}
-        </h2>
-        <div id="page_body">
-          <form onSubmit={ function (event) {
-            event.preventDefault();
-            submitStep(step);
-          } }>
-            {
-              StepComponents.map(function (Component, idx) {
-                return <Component key={idx} step={step} />;
-              })
-            }
-            <button type="submit" className="btn btn-primary">
-              Submit
-            </button>
-          </form>
-        </div>
-      </Fragment>
-    )
-  }
+  return (
+    <Fragment>
+      <h2 id="page_header" className="featured_title">
+        {title}
+      </h2>
+      <Step step={step} index={idx} action={submitStep} />
+    </Fragment>
+  );
 }
