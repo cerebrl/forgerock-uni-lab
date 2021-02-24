@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:client": "ws -d public/ --spa index.html -p 8443 --cert example.com+5.pem --key example.com+5-key.pem",
+    "start:client": "ws -d public/ --spa index.html -p 9443 --cert example.com+5.pem --key example.com+5-key.pem",
     "start:server": "node server/index.mjs",
     "watch": "webpack -w"
   },

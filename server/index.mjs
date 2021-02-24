@@ -53,5 +53,5 @@ env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 /**
  * Attach application to port
  */
-createServer({ key, cert }, app).listen(9443);
-console.log(`Listening to HTTPS on secure port: 9443`);
+createServer({ key, cert }, app).listen(9444);
+console.log(`Listening to HTTPS on secure port: 9444`);
